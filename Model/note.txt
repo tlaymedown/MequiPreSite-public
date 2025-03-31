@@ -1,0 +1,306 @@
+the 72-dim feature are generated from GraphBind, but some protein occur error
+This data is provided in Extend_Feature.zip
+
+remove protein in DNA_Train_573:
+Train_573.pop('4gfh_A')
+Train_573.pop('3s6i_D')
+Train_573.pop('4rul_A')
+Train_573.pop('3fhz_D')
+Train_573.pop('2pyj_B')
+Train_573.pop('4ypr_A')
+Train_573.pop('3a46_B')
+Train_573.pop('4p0q_A')
+Train_573.pop('1xhu_A')
+Train_573.pop('1trr_D')
+Train_573.pop('2drp_D')
+Train_573.pop('4m9v_F')
+Train_573.pop('1gt0_D')
+Train_573.pop('2v6e_A')
+Train_573.pop('4b20_B')
+Train_573.pop('4a12_C')
+Train_573.pop('1odh_A')
+Train_573.pop('2ccz_A')
+Train_573.pop('2vw9_A')
+Train_573.pop('3kde_C')
+Train_573.pop('2c5r_F')
+Train_573.pop('2ve9_D')
+Train_573.pop('4z3c_C')
+
+remove protein in DNA_Test_129:
+Test_129.pop('5vc8_A')
+Test_129.pop('5dlo_A')
+
+remove protein in RNA_Train_495:
+Train_495.pop('2bte_A')
+Train_495.pop('2xgj_A')
+Train_495.pop('3rc8_A')
+Train_495.pop('1f7u_A')
+Train_495.pop('4rqe_A')
+Train_495.pop('4rdx_A')
+Train_495.pop('2azx_B')
+Train_495.pop('1k8w_A')
+Train_495.pop('4tu0_A')
+Train_495.pop('1c9s_O')
+Train_495.pop('4csu_9')
+Train_495.pop('2ykr_W')
+Train_495.pop('4afy_B')
+Train_495.pop('1rpu_A')
+Train_495.pop('1h2c_A')
+
+remove protein in RNA_Test_117:
+Test_117.pop('5g2x_C')
+Test_117.pop('3jcm_B')
+Test_117.pop('5hr7_B')
+Test_117.pop('6d12_B')
+Test_117.pop('6dzp_g')
+
+
+def load_dataset(ligand_type='DNA', trans=True):
+    if ligand_type == 'Protein':
+        with open(Dataset_Path + "Train_335.pkl", "rb") as f:
+            Train_335 = pickle.load(f)
+            Train_335.pop('2j3rA')  # remove the protein with error sequence in the train dataset
+        IDs, sequences, labels = [], [], []
+        for ID in Train_335:
+            IDs.append(ID)
+            item = Train_335[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        train_dataframe = pd.DataFrame(train_dic)
+        with open(Dataset_Path + "Test_60.pkl", "rb") as f:
+            Test_60 = pickle.load(f)
+        IDs, sequences, labels = [], [], []
+        for ID in Test_60:
+            IDs.append(ID)
+            item = Test_60[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        test_dataframe = pd.DataFrame(train_dic)
+        train_pos = './Feature/psepos/Train335_psepos_SC.pkl'
+        test_pos = './Feature/psepos/Test60_psepos_SC.pkl'
+
+    elif ligand_type == 'DNA':
+        if trans:
+            path = 'DNA_trans_Train_573.pkl'
+        else:
+            path = 'DNA_Train_573.pkl'
+        with open(Dataset_Path + path, "rb") as f:
+            Train_573 = pickle.load(f)
+            Train_573.pop('4gfh_A')
+            Train_573.pop('3s6i_D')
+            Train_573.pop('4rul_A')
+            Train_573.pop('3fhz_D')
+            Train_573.pop('2pyj_B')
+            Train_573.pop('4ypr_A')
+            Train_573.pop('3a46_B')
+            Train_573.pop('4p0q_A')
+            Train_573.pop('1xhu_A')
+            Train_573.pop('1trr_D')
+            Train_573.pop('2drp_D')
+            Train_573.pop('4m9v_F')
+            Train_573.pop('1gt0_D')
+            Train_573.pop('2v6e_A')
+            Train_573.pop('4b20_B')
+            Train_573.pop('4a12_C')
+            Train_573.pop('1odh_A')
+            Train_573.pop('2ccz_A')
+            Train_573.pop('2vw9_A')
+            Train_573.pop('3kde_C')
+            Train_573.pop('2c5r_F')
+            Train_573.pop('2ve9_D')
+            Train_573.pop('4z3c_C')
+        IDs, sequences, labels = [], [], []
+        for ID in Train_573:
+            IDs.append(ID)
+            item = Train_573[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        train_dataframe = pd.DataFrame(train_dic)
+
+        with open(Dataset_Path + "DNA_Test_129.pkl", "rb") as f:
+            Test_129 = pickle.load(f)
+            Test_129.pop('5vc8_A')
+            Test_129.pop('5dlo_A')
+        IDs, sequences, labels = [], [], []
+        for ID in Test_129:
+            IDs.append(ID)
+            item = Test_129[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        test_dataframe = pd.DataFrame(train_dic)
+
+        train_pos = './Feature/psepos/DNA_Train_573_psepos_C.pkl'
+        test_pos = './Feature/psepos/DNA_Test_129_psepos_C.pkl'
+
+    elif ligand_type == 'RNA':
+        if trans:
+            path = 'RNA_trans_Train_495.pkl'
+        else:
+            path = 'RNA_Train_495.pkl'
+        with open(Dataset_Path + path, "rb") as f:
+            Train_495 = pickle.load(f)
+            Train_495.pop('2bte_A')
+            Train_495.pop('2xgj_A')
+            Train_495.pop('3rc8_A')
+            Train_495.pop('1f7u_A')
+            Train_495.pop('4rqe_A')
+            Train_495.pop('4rdx_A')
+            Train_495.pop('2azx_B')
+            Train_495.pop('1k8w_A')
+            Train_495.pop('4tu0_A')
+            Train_495.pop('1c9s_O')
+            Train_495.pop('4csu_9')
+            Train_495.pop('2ykr_W')
+            Train_495.pop('4afy_B')
+            Train_495.pop('1rpu_A')
+            Train_495.pop('1h2c_A')
+
+        IDs, sequences, labels = [], [], []
+        for ID in Train_495:
+            IDs.append(ID)
+            item = Train_495[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        train_dataframe = pd.DataFrame(train_dic)
+
+        with open(Dataset_Path + "RNA_Test_117.pkl", "rb") as f:
+            Test_117 = pickle.load(f)
+            Test_117.pop('5g2x_C')
+            Test_117.pop('3jcm_B')
+            Test_117.pop('5hr7_B')
+            Test_117.pop('6d12_B')
+            Test_117.pop('6dzp_g')
+        IDs, sequences, labels = [], [], []
+        for ID in Test_117:
+            IDs.append(ID)
+            item = Test_117[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        test_dataframe = pd.DataFrame(train_dic)
+
+        train_pos = './Feature/psepos/RNA_Train_495_psepos_C.pkl'
+        test_pos = './Feature/psepos/RNA_Test_117_psepos_C.pkl'
+
+    elif ligand_type == 'HEM':
+        with open(Dataset_Path + "HEM_Train_175.pkl", "rb") as f:
+            Train_175 = pickle.load(f)
+            Train_175.pop('3SWJ_A')
+        IDs, sequences, labels = [], [], []
+        for ID in Train_175:
+            IDs.append(ID)
+            item = Train_175[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        train_dataframe = pd.DataFrame(train_dic)
+
+        with open(Dataset_Path + "HEM_Test_96.pkl", "rb") as f:
+            Test_96 = pickle.load(f)
+        IDs, sequences, labels = [], [], []
+        for ID in Test_96:
+            IDs.append(ID)
+            item = Test_96[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        test_dataframe = pd.DataFrame(train_dic)
+
+        train_pos = './Feature/psepos/HEM_Train_175_psepos_C.pkl'
+        test_pos = './Feature/psepos/HEM_Test_96_psepos_C.pkl'
+
+    elif ligand_type == 'ATP':
+        with open(Dataset_Path + "ATP_Train_388.pkl", "rb") as f:
+            Train_388 = pickle.load(f)
+            Train_388.pop('1B0U_A')
+            Train_388.pop('5J1S_B')
+            Train_388.pop('1Z0S_D')
+            Train_388.pop('4TU0_A')
+            Train_388.pop('1MAB_B')
+            Train_388.pop('1XSC_A')
+            Train_388.pop('3FVQ_B')
+
+        IDs, sequences, labels = [], [], []
+        for ID in Train_388:
+            IDs.append(ID)
+            item = Train_388[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        train_dataframe = pd.DataFrame(train_dic)
+
+        with open(Dataset_Path + "ATP_Test_41.pkl", "rb") as f:
+            Test_41 = pickle.load(f)
+        IDs, sequences, labels = [], [], []
+        for ID in Test_41:
+            IDs.append(ID)
+            item = Test_41[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        test_dataframe = pd.DataFrame(train_dic)
+
+        train_pos = './Feature/psepos/ATP_Train_388_psepos_C.pkl'
+        test_pos = './Feature/psepos/ATP_Test_41_psepos_C.pkl'
+
+    elif ligand_type == 'MN':
+        with open(Dataset_Path + "MN_Train_440.pkl", "rb") as f:
+            Train_440 = pickle.load(f)
+
+        IDs, sequences, labels = [], [], []
+        for ID in Train_440:
+            IDs.append(ID)
+            item = Train_440[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        train_dataframe = pd.DataFrame(train_dic)
+
+        with open(Dataset_Path + "MN_Test_144.pkl", "rb") as f:
+            Test_144 = pickle.load(f)
+        IDs, sequences, labels = [], [], []
+        for ID in Test_144:
+            IDs.append(ID)
+            item = Test_144[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        test_dataframe = pd.DataFrame(train_dic)
+
+        train_pos = './Feature/psepos/MN_Train_440_psepos_C.pkl'
+        test_pos = './Feature/psepos/MN_Test_144_psepos_C.pkl'
+
+    elif ligand_type == 'CA':
+        with open(Dataset_Path + "CA_Train_1022.pkl", "rb") as f:
+            Train_1022 = pickle.load(f)
+
+        IDs, sequences, labels = [], [], []
+        for ID in Train_1022:
+            IDs.append(ID)
+            item = Train_1022[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        train_dataframe = pd.DataFrame(train_dic)
+
+        with open(Dataset_Path + "CA_Test_515.pkl", "rb") as f:
+            Test_515 = pickle.load(f)
+        IDs, sequences, labels = [], [], []
+        for ID in Test_515:
+            IDs.append(ID)
+            item = Test_515[ID]
+            sequences.append(item[0])
+            labels.append(item[1])
+        train_dic = {"ID": IDs, "sequence": sequences, "label": labels}
+        test_dataframe = pd.DataFrame(train_dic)
+
+        train_pos = './Feature/psepos/CA_Train_1022_psepos_C.pkl'
+        test_pos = './Feature/psepos/CA_Test_515_psepos_C.pkl'
+
+    return train_dataframe, test_dataframe, train_pos, test_pos
+    pass
