@@ -1,5 +1,6 @@
 ####################################################################################################
-# Obtained from https://github.com/ml-jku/vnegnn/blob/master/src/models/egnn.py
+# updated from https://github.com/ml-jku/vnegnn/blob/master/src/models/egnn.py
+# we modified vn-egnn for the protein interaction site adaptation task
 ####################################################################################################
 
 from typing import Tuple, Union
